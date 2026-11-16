@@ -1,0 +1,6 @@
+{
+  "name": "Limon Chat",
+  "description": "Real-time Liquid Glass 1:1 messenger, media sharing, and WebRTC voice/video calling app",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

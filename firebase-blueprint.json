@@ -1,0 +1,268 @@
+{
+  "entities": {
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Publicly discoverable user profile without PII such as email or phone.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID of the user." },
+        "username": { "type": "string", "description": "Unique display username." },
+        "usernameLowercase": { "type": "string", "description": "Lowercase unique username for case-insensitive lookup." },
+        "displayName": { "type": "string", "description": "Full display name." },
+        "photoUrl": { "type": "string", "description": "Optional profile avatar URL or RTDB key." },
+        "bio": { "type": "string", "description": "Short user biography." },
+        "online": { "type": "boolean", "description": "Current online presence status." },
+        "lastSeen": { "type": "string", "format": "date-time", "description": "Server timestamp of last activity." },
+        "activeDevice": { "type": "string", "description": "Active device model label." },
+        "privacyShowLastSeen": { "type": "string", "enum": ["everyone", "contacts", "nobody"] },
+        "privacyShowOnline": { "type": "string", "enum": ["everyone", "contacts", "nobody"] },
+        "privacyShowPhoto": { "type": "string", "enum": ["everyone", "contacts", "nobody"] },
+        "privacyReadReceipts": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation server timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last profile update server timestamp." }
+      },
+      "required": ["uid", "username", "usernameLowercase", "displayName", "online", "privacyShowLastSeen", "privacyShowOnline", "privacyShowPhoto", "privacyReadReceipts", "createdAt", "updatedAt"]
+    },
+    "PrivateUserData": {
+      "title": "PrivateUserData",
+      "description": "Owner-only private user account info, settings, and device tokens.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "emailVerified": { "type": "boolean" },
+        "phoneNumber": { "type": "string" },
+        "fcmToken": { "type": "string" },
+        "fcmTokens": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "updatedAt"]
+    },
+    "UsernameReservation": {
+      "title": "UsernameReservation",
+      "description": "Case-insensitive unique username lock document.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "username": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "username", "createdAt"]
+    },
+    "BlockedUser": {
+      "title": "BlockedUser",
+      "description": "Record of a blocked user owned by the blocker.",
+      "type": "object",
+      "properties": {
+        "blockedUid": { "type": "string" },
+        "blockedDisplayName": { "type": "string" },
+        "blockedUsername": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["blockedUid", "blockedDisplayName", "blockedUsername", "createdAt"]
+    },
+    "Chat": {
+      "title": "Chat",
+      "description": "One-to-one real-time conversation metadata and optional shared wallpaper.",
+      "type": "object",
+      "properties": {
+        "memberUids": { "type": "array" },
+        "lastMessageText": { "type": "string" },
+        "lastMessageType": { "type": "string", "enum": ["text", "image", "video", "voice", "document", "location", "contact"] },
+        "lastMessageSenderId": { "type": "string" },
+        "lastMessageAt": { "type": "string", "format": "date-time" },
+        "pinnedMessageId": { "type": "string" },
+        "pinnedMessageText": { "type": "string" },
+        "unreadBy": { "type": "object" },
+        "sharedWallpaperPreset": { "type": "string" },
+        "sharedWallpaperUrl": { "type": "string" },
+        "sharedWallpaperBlur": { "type": "boolean" },
+        "sharedWallpaperBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["memberUids", "lastMessageText", "lastMessageType", "lastMessageSenderId", "createdAt", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Individual message within a 1:1 chat.",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "type": { "type": "string", "enum": ["text", "image", "video", "voice", "document", "location", "contact"] },
+        "text": { "type": "string" },
+        "mediaUrl": { "type": "string" },
+        "mediaName": { "type": "string" },
+        "mediaSizeBytes": { "type": "integer" },
+        "mediaDurationMs": { "type": "integer" },
+        "waveform": { "type": "array" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "locationName": { "type": "string" },
+        "contactName": { "type": "string" },
+        "contactUsername": { "type": "string" },
+        "contactUid": { "type": "string" },
+        "replyToId": { "type": "string" },
+        "replyToText": { "type": "string" },
+        "replyToSenderName": { "type": "string" },
+        "forwardedFrom": { "type": "string" },
+        "deliveryStatus": { "type": "string", "enum": ["sent", "delivered", "read"] },
+        "reactions": { "type": "object" },
+        "isViewOnce": { "type": "boolean" },
+        "viewOnceViewed": { "type": "boolean" },
+        "deletedForEveryone": { "type": "boolean" },
+        "deletedForUsers": { "type": "array" },
+        "editedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["chatId", "senderId", "memberUids", "type", "text", "deliveryStatus", "deletedForEveryone", "createdAt"]
+    },
+    "ChatPreference": {
+      "title": "ChatPreference",
+      "description": "Per-user mute, archive, pin, and clear history preferences for a chat.",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string" },
+        "muted": { "type": "boolean" },
+        "archived": { "type": "boolean" },
+        "pinned": { "type": "boolean" },
+        "locked": { "type": "boolean" },
+        "lastReadAt": { "type": "string", "format": "date-time" },
+        "clearedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["chatId", "muted", "archived", "pinned", "updatedAt"]
+    },
+    "TypingStatus": {
+      "title": "TypingStatus",
+      "description": "Real-time typing indicator for a user inside a chat.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "isTyping": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "memberUids", "isTyping", "updatedAt"]
+    },
+    "CallSession": {
+      "title": "CallSession",
+      "description": "WebRTC voice or video call signaling session.",
+      "type": "object",
+      "properties": {
+        "callerId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "callerName": { "type": "string" },
+        "callerPhotoUrl": { "type": "string" },
+        "receiverName": { "type": "string" },
+        "receiverPhotoUrl": { "type": "string" },
+        "callType": { "type": "string", "enum": ["voice", "video"] },
+        "status": { "type": "string", "enum": ["ringing", "accepted", "declined", "ended", "missed"] },
+        "offerSdp": { "type": "string" },
+        "answerSdp": { "type": "string" },
+        "durationSeconds": { "type": "integer" },
+        "deletedForUsers": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "endedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["callerId", "receiverId", "memberUids", "callerName", "receiverName", "callType", "status", "createdAt", "updatedAt"]
+    },
+    "IceCandidateRecord": {
+      "title": "IceCandidateRecord",
+      "description": "WebRTC ICE candidate exchanged during a call.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "memberUids": { "type": "array" },
+        "sdpMid": { "type": "string" },
+        "sdpMLineIndex": { "type": "integer" },
+        "candidate": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["senderId", "memberUids", "sdpMid", "sdpMLineIndex", "candidate", "createdAt"]
+    },
+    "UserNotification": {
+      "title": "UserNotification",
+      "description": "In-app notification feed item.",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["message", "call", "missed_call", "security", "activity"] },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "chatId": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "senderId", "senderName", "title", "body", "read", "createdAt"]
+    },
+    "UserReport": {
+      "title": "UserReport",
+      "description": "Abuse/safety report filed by a user.",
+      "type": "object",
+      "properties": {
+        "reporterId": { "type": "string" },
+        "reportedUid": { "type": "string" },
+        "reason": { "type": "string" },
+        "details": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reporterId", "reportedUid", "reason", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/publicProfiles/{userId}": {
+      "schema": { "$ref": "#/entities/PublicProfile" },
+      "description": "Publicly searchable user profiles without PII."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/PrivateUserData" },
+      "description": "Owner-only private user account details, settings, and tokens."
+    },
+    "/usernames/{usernameLowercase}": {
+      "schema": { "$ref": "#/entities/UsernameReservation" },
+      "description": "Case-insensitive unique username registry."
+    },
+    "/users/{userId}/blocks/{blockedUid}": {
+      "schema": { "$ref": "#/entities/BlockedUser" },
+      "description": "Owner-managed blocked user records."
+    },
+    "/users/{userId}/chatPreferences/{chatId}": {
+      "schema": { "$ref": "#/entities/ChatPreference" },
+      "description": "Owner-managed per-chat archive/mute/pin/clear state."
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/UserNotification" },
+      "description": "In-app activity, security, and missed call notifications."
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/Chat" },
+      "description": "1:1 private conversation metadata."
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Real-time messages inside a conversation."
+    },
+    "/chats/{chatId}/typing/{typingUid}": {
+      "schema": { "$ref": "#/entities/TypingStatus" },
+      "description": "Real-time typing state per chat member."
+    },
+    "/calls/{callId}": {
+      "schema": { "$ref": "#/entities/CallSession" },
+      "description": "WebRTC call signaling session and call history."
+    },
+    "/calls/{callId}/iceCandidates/{candidateId}": {
+      "schema": { "$ref": "#/entities/IceCandidateRecord" },
+      "description": "ICE candidates for a WebRTC call."
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/UserReport" },
+      "description": "User safety reports."
+    }
+  }
+}

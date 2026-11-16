@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Limon Chat</string>
+    <string name="tagline">Liquid Glass Real-Time Messenger</string>
+    <string name="sign_in_google">Continue with Google</string>
+    <string name="nav_chats">Chats</string>
+    <string name="nav_contacts">Contacts</string>
+    <string name="nav_calls">Calls</string>
+    <string name="nav_settings">Settings</string>
+    <string name="search_users_hint">Search @username, name, or User ID</string>
+    <string name="message_input_hint">Message</string>
+    <string name="notif_channel_messages">Messages</string>
+    <string name="notif_channel_calls">Voice &amp; Video Calls</string>
+    <string name="notif_channel_security">Security &amp; Activity</string>
+    <string name="reply_action">Reply</string>
+    <string name="mark_read_action">Mark as Read</string>
+    <string name="accept_call">Accept</string>
+    <string name="decline_call">Decline</string>
+    <string name="end_call">End Call</string>
+</resources>
